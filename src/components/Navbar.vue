@@ -4,7 +4,6 @@
   <b-navbar-brand href="#">Report Aide Prototype</b-navbar-brand>
   <b-collapse is-nav id="nav_dropdown_collapse">
     <b-navbar-nav>
-      <b-nav-item href="#">Home</b-nav-item>
       <b-nav-item href="#">FLSA</b-nav-item>
       <b-nav-item href="#">FMLA</b-nav-item>
     </b-navbar-nav>
