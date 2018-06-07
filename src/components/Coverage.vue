@@ -8,34 +8,41 @@
             <div class="form-group form-group-lg">
               <h6>Basis for coverage:</h6>
               <div class="form-check">
-                <input v-model="coverage.enterprise" type="checkbox" class="form-check-input" id="covg-type-ent">
+                <input v-model="coverage.enterprise.checked" type="checkbox" class="form-check-input" id="covg-type-ent">
                 <label class="form-check-label" for="covg-type-ent">Enterprise</label>
               </div>
               <div class="form-check">
-                <input v-model="coverage.individual" type="checkbox" class="form-check-input" id="covg-type-ind">
+                <input v-model="coverage.individual.checked" type="checkbox" class="form-check-input" id="covg-type-ind">
                 <label class="form-check-label" for="covg-type-ind">Individual</label>
               </div>
               <div class="form-check">
-                <input v-model="coverage.named" type="checkbox" class="form-check-input" id="covg-type-named">
+                <input v-model="coverage.named.checked" type="checkbox" class="form-check-input" id="covg-type-named">
                 <label class="form-check-label" for="covg-type-named">Named</label>
               </div>
             </div>
             <transition name="fade" mode="out-in">
-              <div v-if="coverage.enterprise" class="form-group">
+              <div v-if="coverage.enterprise.checked" class="form-group">
                 <h6 class="mt-3">Annual Dollar Volume:</h6>
                 <label for="adv0">{{ year0 - 1 }}</label>
-                <input v-model.lazy="adv0" v-money="money" class="form-control" id="adv0">
+                <input v-model.lazy="coverage.enterprise.adv0" v-money="money" class="form-control" id="adv0">
                 <label for="adv1">{{ year0 - 2 }}</label>
-                <input v-model.lazy="adv1" v-money="money" type="text" class="form-control" id="adv1">
+                <input v-model.lazy="coverage.enterprise.adv1" v-money="money" type="text" class="form-control" id="adv1">
                 <label for="adv2">{{ year0 - 3 }}</label>
-                <input v-model.lazy="adv2" v-money="money" type="text" class="form-control" id="adv1">
+                <input v-model.lazy="coverage.enterprise.adv2" v-money="money" type="text" class="form-control" id="adv2">
+                <h6 class="mt-3">Products handled by employees that have moved in commerce:</h6>
+                <input
+                  v-model.lazy="coverage.enterprise.products"
+                  type="text"
+                  class="form-control"
+                  placeholder="Dell laptops and Ford trucks."
+                />
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="coverage.individual" class="form-group">
+              <div v-if="coverage.individual.checked" class="form-group">
                 <h6 class="mt-3">Describe the basis for individual coverage:</h6>
                 <textarea
-                  v-model.lazy="coverage.basisIndividual"
+                  v-model.lazy="coverage.individual.basis"
                   class="form-control"
                   id="adv0"
                   placeholder="The employees in this case assembled bird houses that were shipped to 12 states...">
@@ -43,7 +50,7 @@
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="coverage.named" class="form-group">
+              <div v-if="coverage.named.checked" class="form-group">
                 <h6 class="mt-3">The subject employer is a(n):</h6>
                 <div class="form-check">
                   <input  v-model="named" class="form-check-input" type="radio" id="hospital" value="hospital">
@@ -93,15 +100,22 @@ export default {
 
   data () {
     return {
-      adv0: null,
-      adv1: null,
-      adv2: null,
       coverage: {
-        enterprise: false,
-        individual: false,
-        named: false,
-        basisIndividual: '',
-        basisNamed: ''
+        enterprise: {
+          adv0: null,
+          adv1: null,
+          adv2: null,
+          checked: false,
+          products: ''
+        },
+        individual: {
+          basis: '',
+          checked: false
+        },
+        named: {
+          basis: '',
+          checked: false
+        }
       },
       money: {
         decimal: '.',

@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Navbar from '@/components/Navbar'
-import Home from '@/components/Home'
+import Coverage from '@/components/Coverage'
+import Start from '@/components/Start'
 
 Vue.use(Router)
 
@@ -10,10 +11,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
+      name: 'Start',
       components: {
         nav: Navbar,
-        body: Home
+        body: Start
+      }
+    },
+    {
+      path: '/coverage',
+      name: 'Coverage',
+      components: {
+        nav: Navbar,
+        body: Coverage
       }
     }
   ]
