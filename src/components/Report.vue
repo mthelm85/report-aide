@@ -5,27 +5,27 @@
       <div class="row mt-3">
         <div class="col float-left">
           <div>
-            {{ caseInfo.legalName }}
+            {{ legalName }}
             <br>
-            {{ caseInfo.street}}
+            {{ street }}
             <br>
-            {{ caseInfo.city }}, {{ caseInfo.state }} {{ caseInfo.zip }}
+            {{ city }}, {{ state }} {{ zip }}
           </div>
         </div>
         <div class="col float-right text-right">
           <div>
-            {{ caseInfo.caseId }}
+            {{ caseId }}
             <br>
-            {{ caseInfo.ein}}
+            {{ ein }}
           </div>
         </div>
       </div>
       <h3 class="text-center mt-5">FLSA Narrative Report</h3>
-      <p class="mt-5">The legal name of the subject employer is {{ caseInfo.legalName }} and the trade name is {{ caseInfo.tradeName }}.
+      <p class="mt-5">The legal name of the subject employer is {{ legalName }} and the trade name is {{ tradeName }}.
       </p>
-      <p v-if="coverage.enterprise.checked">The subject employer meets the definition of <i>enterprise engaged in commerce or in the production of goods
+      <p>The subject employer meets the definition of <i>enterprise engaged in commerce or in the production of goods
         for commerce</i>, per Section 203(s)(1)(A) of the Act, as its annual dollar volume of business done was
-        ${{ coverage.enterprise.adv0 }} in {{ year0}}, ${{ coverage.enterprise.adv1 }} in {{ year0 - 1 }}, and ${{ coverage.enterprise.adv2 }} in
+        ${{ adv0 }} in {{ year0 }}, ${{ adv1 }} in {{ year0 - 1 }}, and ${{ adv2 }} in
         {{ year0 - 2 }}.
       </p>
     </div>
@@ -37,39 +37,34 @@
 export default {
   data () {
     return {
-      caseInfo: {
-        caseId: '1234567',
-        ein: '75-123456',
-        tradeName: 'Johnny\'s Car Wash',
-        legalName: 'Johnny IV, Inc.',
-        street: '123 Perkins',
-        zip: '90210',
-        city: 'Yakima',
-        state: 'WA'
-      },
-      coverage: {
-        enterprise: {
-          adv0: 500000,
-          adv1: 500000,
-          adv2: 500000,
-          checked: true,
-          products: 'Dell brand laptops and Ford trucks.'
-        },
-        individual: {
-          basis: '',
-          checked: false
-        },
-        named: {
-          basis: '',
-          checked: false
-        }
-      }
+
     }
   },
 
   computed: {
+    caseId () {
+      return this.$store.state.caseInfo.caseId
+    },
+    city () {
+      return this.$store.state.caseInfo.city
+    },
+    ein () {
+      return this.$store.state.caseInfo.ein
+    },
+    state () {
+      return this.$store.state.caseInfo.state
+    },
+    street () {
+      return this.$store.state.caseInfo.street
+    },
+    legalName () {
+      return this.$store.state.caseInfo.legalName
+    },
     year0 () {
       return new Date().getFullYear()
+    },
+    zip () {
+      return this.$store.state.caseInfo.zip
     }
   }
 }

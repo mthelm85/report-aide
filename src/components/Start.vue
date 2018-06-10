@@ -7,22 +7,23 @@
           <form class="p-3">
             <div class="form-group form-group-lg">
               <h6 class="mt-3">Case ID:</h6>
-              <input class="form-control" type="number" placeholder="1235467">
+              <input v-model="caseId" class="form-control" type="number" placeholder="1235467">
               <h6 class="mt-3">EIN or SSN:</h6>
-              <input class="form-control" type="number" placeholder="12-3456789">
+              <input v-model="ein" class="form-control" type="text" placeholder="12-3456789">
+              {{ ein }}
               <h6 class="mt-3">Employer Name:</h6>
               <label for="legalName">Legal Name</label>
-              <input class="form-control" type="text" placeholder="Johnny III, Inc.">
+              <input v-model="legalName" class="form-control" type="text" placeholder="Johnny III, Inc.">
               <label for="tradeName" class="mt-2">Trade Name</label>
-              <input class="form-control" type="text" placeholder="Johnny's Car Wash">
+              <input v-model="tradeName" class="form-control" type="text" placeholder="Johnny's Car Wash">
               <h6 class="mt-3">Establishment Address:</h6>
               <label for="street">Street</label>
-              <input class="form-control" type="text" id="street" placeholder="123 Perkins Way">
+              <input v-model="street" class="form-control" type="text" id="street" placeholder="123 Perkins Way">
               <label for="zip" class="mt-2">Zip Code</label>
-              <input class="form-control" type="number" id="zip" placeholder="90210">
+              <input v-model="zip" class="form-control" type="number" id="zip" placeholder="90210">
             </div>
             <div class="text-center">
-              <router-link to="Coverage" class="btn btn-primary float-middle">Coverage</router-link>
+              <button class="btn btn-primary float-middle" @click.prevent="next">Coverage</button>
             </div>
           </form>
         </div>
@@ -32,14 +33,35 @@
 </template>
 
 <script>
+import Axios from 'axios'
 export default {
   data () {
     return {
       caseId: '',
+      ein: '',
       tradeName: '',
       legalName: '',
       street: '',
       zip: ''
+    }
+  },
+
+  methods: {
+    async next () {
+      try {
+        let cityState = await Axios.post(`https://maps.googleapis.com/maps/api/geocode/json?&address=${this.zip}`)
+        this.$store.state.caseInfo.city = cityState.data.results[0].address_components[1].short_name
+        this.$store.state.caseInfo.state = cityState.data.results[0].address_components[2].short_name
+      } catch (err) {
+        console.log(err)
+      }
+      this.$store.state.caseInfo.caseId = this.caseId
+      this.$store.state.caseInfo.ein = this.ein
+      this.$store.state.caseInfo.legalName = this.legalName
+      this.$store.state.caseInfo.tradeName = this.tradeName
+      this.$store.state.caseInfo.street = this.street
+      this.$store.state.caseInfo.zip = this.zip
+      this.$router.push('/coverage')
     }
   }
 }
