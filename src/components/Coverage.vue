@@ -3,8 +3,50 @@
     <div class="row justify-content-center">
       <div class="col-center">
         <h1 class="text-center">Coverage</h1>
-        <div class="card m-3" style="min-width: 400px">
+        <div class="card m-3 shadow" style="min-width: 400px">
           <form class="p-3">
+            <div class="form-group form-group-lg">
+              <h6 class="mt-3">Headquarters Address:</h6>
+              <div class="form-check">
+                <input type="checkbox" id="sameAddress" class="form-check-input">
+                <label for="sameAddress">Same as establishment address</label>
+              </div>
+              <label for="street">Street</label>
+              <input class="form-control" type="text" id="street" placeholder="345 Frances St.">
+              <label for="zip" class="mt-2">Zip Code</label>
+              <input class="form-control" type="number" id="zip" placeholder="10465">
+              <h6 class="mt-3">Company Structure:</h6>
+              <div class="form-check">
+                <input v-model="type.corporation" type="checkbox" class="form-check-input" id="comp-type-corp">
+                <label class="form-check-label" for="comp-type-corp">Corporation</label>
+              </div>
+              <div class="form-check">
+                <input v-model="type.llc" type="checkbox" class="form-check-input" id="comp-type-llc">
+                <label class="form-check-label" for="comp-type-llc">Limited Liability Company</label>
+              </div>
+              <div class="form-check">
+                <input v-model="type.partnership" type="checkbox" class="form-check-input" id="comp-type-partner">
+                <label class="form-check-label" for="comp-type-partner">Partnership</label>
+              </div>
+              <div class="form-check">
+                <input v-model="type.proprietorship" type="checkbox" class="form-check-input" id="comp-type-sole">
+                <label class="form-check-label" for="comp-type-sole">Sole Proprietorship</label>
+              </div>
+              <transition name="fade" mode="out-in">
+                <div v-if="type.corporation || type.llc || type.partnership" class="form-group form-group-lg">
+                  <label for="principals" class="mt-2">Partners/Principals</label>
+                  <input type="text" id="principals" class="form-control" placeholder="John A. Doe (25%) and Jane B. Doe (75%)">
+                  <label for="officers" class="mt-2">Company Officers</label>
+                  <input type="text" id="officers" class="form-control" placeholder="Jack C. Smith (President) and Jackie D. Smith (Treasurer)">
+                </div>
+              </transition>
+              <transition name="fade" mode="out-in">
+                <div v-if="type.proprietorship" class="form-group form-group-lg">
+                  <label for="proprietorName" class="mt-2">Name of Sole Proprietor</label>
+                  <input type="text" id="proprietorName" class="form-control" placeholder="John A. Doe">
+                </div>
+              </transition>
+            </div>
             <div class="form-group form-group-lg">
               <h6>Basis for coverage:</h6>
               <div class="form-check">
@@ -87,6 +129,14 @@
                 </div>
               </div>
             </transition>
+            <transition name="fade" mode="out-in">
+              <div
+                v-if="coverage.enterprise.checked || coverage.individual.checked || coverage.named.checked"
+                class="text-center"
+              >
+                <router-link to="Report" class="btn btn-primary float-middle">Generate Report</router-link>
+              </div>
+            </transition>
           </form>
         </div>
       </div>
@@ -124,7 +174,14 @@ export default {
         precision: 0,
         masked: false
       },
-      named: ''
+      officers: '',
+      type: {
+        corporation: false,
+        llc: false,
+        partnership: false,
+        proprietorship: false
+      },
+      principals: ''
     }
   },
 

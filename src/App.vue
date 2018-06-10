@@ -16,7 +16,7 @@ export default {
 <style lang="css">
 .fade-enter-active, .fade-leave-active {
   transition: all 1s;
-  max-height: 1200px;
+  max-height: 1600px;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
