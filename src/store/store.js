@@ -11,8 +11,7 @@ export const store = new Vuex.Store({
       tradeName: '',
       legalName: '',
       street: '',
-      city: '',
-      state: '',
+      cityStateZip: '',
       zip: ''
     }
   }

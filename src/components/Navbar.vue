@@ -5,7 +5,7 @@
   <b-collapse is-nav id="nav_dropdown_collapse">
     <b-navbar-nav>
       <b-nav-item-dropdown text="FLSA" right>
-      <b-dropdown-item><router-link to="/">Employer Info</router-link></b-dropdown-item>
+      <b-dropdown-item><router-link to="/">Case Info</router-link></b-dropdown-item>
       <b-dropdown-item><router-link to="/coverage">Coverage</router-link></b-dropdown-item>
       <b-dropdown-item><router-link to="/report">Report</router-link></b-dropdown-item>
     </b-nav-item-dropdown>

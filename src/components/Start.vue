@@ -10,7 +10,6 @@
               <input v-model="caseId" class="form-control" type="number" placeholder="1235467">
               <h6 class="mt-3">EIN or SSN:</h6>
               <input v-model="ein" class="form-control" type="text" placeholder="12-3456789">
-              {{ ein }}
               <h6 class="mt-3">Employer Name:</h6>
               <label for="legalName">Legal Name</label>
               <input v-model="legalName" class="form-control" type="text" placeholder="Johnny III, Inc.">
@@ -50,8 +49,8 @@ export default {
     async next () {
       try {
         let cityState = await Axios.post(`https://maps.googleapis.com/maps/api/geocode/json?&address=${this.zip}`)
-        this.$store.state.caseInfo.city = cityState.data.results[0].address_components[1].short_name
-        this.$store.state.caseInfo.state = cityState.data.results[0].address_components[2].short_name
+        console.log(cityState.data.results)
+        this.$store.state.caseInfo.cityStateZip = cityState.data.results[0].formatted_address.slice(0, -5)
       } catch (err) {
         console.log(err)
       }

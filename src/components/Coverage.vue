@@ -2,19 +2,24 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-center">
-        <h1 class="text-center">Coverage</h1>
+        <h1 class="text-center mt-3">Coverage</h1>
         <div class="card m-3 shadow" style="min-width: 400px">
           <form class="p-3">
             <div class="form-group form-group-lg">
+              <h6 class="mt-3">Period of Investigation:</h6>
+              <label for="proprietorName" class="mt-2">Start</label>
+              <input type="date" id="invStart" class="form-control">
+              <label for="proprietorName" class="mt-2">End</label>
+              <input type="date" id="invEnd" class="form-control">
               <h6 class="mt-3">Headquarters Address:</h6>
               <div class="form-check">
-                <input type="checkbox" id="sameAddress" class="form-check-input">
+                <input @change="sameAddress" type="checkbox" id="sameAddress" class="form-check-input">
                 <label for="sameAddress">Same as establishment address</label>
               </div>
               <label for="street">Street</label>
-              <input class="form-control" type="text" id="street" placeholder="345 Frances St.">
+              <input v-model="hqAddress.street" class="form-control" type="text" id="street" placeholder="456 Frances St.">
               <label for="zip" class="mt-2">Zip Code</label>
-              <input class="form-control" type="number" id="zip" placeholder="10465">
+              <input v-model="hqAddress.zip" class="form-control" type="number" id="zip" placeholder="10001">
               <h6 class="mt-3">Company Structure:</h6>
               <div class="form-check">
                 <input v-model="type.corporation" type="checkbox" class="form-check-input" id="comp-type-corp">
@@ -162,10 +167,18 @@ export default {
           basis: '',
           checked: false
         },
+        invPeriod: {
+          start: '',
+          end: ''
+        },
         named: {
           basis: '',
           checked: false
         }
+      },
+      hqAddress: {
+        street: '',
+        zip: ''
       },
       money: {
         decimal: '.',
@@ -192,6 +205,18 @@ export default {
   computed: {
     year0 () {
       return new Date().getFullYear()
+    }
+  },
+
+  methods: {
+    sameAddress () {
+      if (this.hqAddress.street === '') {
+        this.hqAddress.street = this.$store.state.caseInfo.street
+        this.hqAddress.zip = this.$store.state.caseInfo.zip
+      } else {
+        this.hqAddress.street = ''
+        this.hqAddress.zip = ''
+      }
     }
   }
 

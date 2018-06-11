@@ -9,7 +9,7 @@
             <br>
             {{ street }}
             <br>
-            {{ city }}, {{ state }} {{ zip }}
+            {{ cityStateZip }}
           </div>
         </div>
         <div class="col float-right text-right">
@@ -20,8 +20,8 @@
           </div>
         </div>
       </div>
-      <h3 class="text-center mt-5">FLSA Narrative Report</h3>
-      <p class="mt-5">The legal name of the subject employer is {{ legalName }} and the trade name is {{ tradeName }}.
+      <h3 class="text-center mt-4">FLSA Narrative Report</h3>
+      <p class="mt-4">The legal name of the subject employer is {{ legalName }} and the trade name is {{ tradeName }}.
       </p>
       <p>The subject employer meets the definition of <i>enterprise engaged in commerce or in the production of goods
         for commerce</i>, per Section 203(s)(1)(A) of the Act, as its annual dollar volume of business done was
@@ -45,14 +45,11 @@ export default {
     caseId () {
       return this.$store.state.caseInfo.caseId
     },
-    city () {
-      return this.$store.state.caseInfo.city
+    cityStateZip () {
+      return this.$store.state.caseInfo.cityStateZip
     },
     ein () {
       return this.$store.state.caseInfo.ein
-    },
-    state () {
-      return this.$store.state.caseInfo.state
     },
     street () {
       return this.$store.state.caseInfo.street
