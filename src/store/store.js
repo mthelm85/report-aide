@@ -50,5 +50,13 @@ export const store = new Vuex.Store({
       principals: '',
       proprietor: ''
     }
+  },
+  getters: {
+    getCaseInfo: state => {
+      return state.caseInfo
+    },
+    getCoverage: state => {
+      return state.coverage
+    }
   }
 })

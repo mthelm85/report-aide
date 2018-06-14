@@ -226,6 +226,7 @@ export default {
       this.$store.state.coverage.invPeriod.end = this.invPeriod.end
       this.$store.state.coverage.officers = this.officers
       this.$store.state.coverage.type.corporation = this.type.corporation
+      this.$router.push('/report')
     },
     sameAddress () {
       if (this.hqAddress.street === '') {
