@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-center">
-        <h1 class="text-center">Case Information</h1>
+        <h1 class="text-center mt-3">Case Information</h1>
         <div class="card m-3 shadow" style="min-width: 400px">
           <form class="p-3">
             <div class="form-group form-group-lg">

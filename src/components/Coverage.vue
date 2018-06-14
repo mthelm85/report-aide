@@ -7,10 +7,10 @@
           <form class="p-3">
             <div class="form-group form-group-lg">
               <h6 class="mt-3">Period of Investigation:</h6>
-              <label for="proprietorName" class="mt-2">Start</label>
-              <input type="date" id="invStart" class="form-control">
-              <label for="proprietorName" class="mt-2">End</label>
-              <input type="date" id="invEnd" class="form-control">
+              <label for="invStart" class="mt-2">Start</label>
+              <input v-model="invPeriod.start" type="date" id="invStart" class="form-control">
+              <label for="invEnd" class="mt-2">End</label>
+              <input v-model="invPeriod.end" type="date" id="invEnd" class="form-control">
               <h6 class="mt-3">Headquarters Address:</h6>
               <div class="form-check">
                 <input @change="sameAddress" type="checkbox" id="sameAddress" class="form-check-input">
@@ -20,6 +20,8 @@
               <input v-model="hqAddress.street" class="form-control" type="text" id="street" placeholder="456 Frances St.">
               <label for="zip" class="mt-2">Zip Code</label>
               <input v-model="hqAddress.zip" class="form-control" type="number" id="zip" placeholder="10001">
+              <h6 class="mt-3">Nature of the business:</h6>
+              <textarea class="form-control mt-3" placeholder="The subject employer specializes in the production of luxury dog houses that are sold to large pet supply retailers across the U.S."></textarea>
               <h6 class="mt-3">Company Structure:</h6>
               <div class="form-check">
                 <input v-model="type.corporation" type="checkbox" class="form-check-input" id="comp-type-corp">
@@ -40,45 +42,45 @@
               <transition name="fade" mode="out-in">
                 <div v-if="type.corporation || type.llc || type.partnership" class="form-group form-group-lg">
                   <label for="principals" class="mt-2">Partners/Principals</label>
-                  <input type="text" id="principals" class="form-control" placeholder="John A. Doe (25%) and Jane B. Doe (75%)">
+                  <input v-model="principals" type="text" id="principals" class="form-control" placeholder="John A. Doe (25%) and Jane B. Doe (75%)">
                   <label for="officers" class="mt-2">Company Officers</label>
-                  <input type="text" id="officers" class="form-control" placeholder="Jack C. Smith (President) and Jackie D. Smith (Treasurer)">
+                  <input v-model="officers" type="text" id="officers" class="form-control" placeholder="Jack C. Smith (President) and Jackie D. Smith (Treasurer)">
                 </div>
               </transition>
               <transition name="fade" mode="out-in">
                 <div v-if="type.proprietorship" class="form-group form-group-lg">
                   <label for="proprietorName" class="mt-2">Name of Sole Proprietor</label>
-                  <input type="text" id="proprietorName" class="form-control" placeholder="John A. Doe">
+                  <input v-model="proprietor" type="text" id="proprietorName" class="form-control" placeholder="John A. Doe">
                 </div>
               </transition>
             </div>
             <div class="form-group form-group-lg">
               <h6>Basis for coverage:</h6>
               <div class="form-check">
-                <input v-model="coverage.enterprise.checked" type="checkbox" class="form-check-input" id="covg-type-ent">
+                <input v-model="basis.enterprise.checked" type="checkbox" class="form-check-input" id="covg-type-ent">
                 <label class="form-check-label" for="covg-type-ent">Enterprise</label>
               </div>
               <div class="form-check">
-                <input v-model="coverage.individual.checked" type="checkbox" class="form-check-input" id="covg-type-ind">
+                <input v-model="basis.individual.checked" type="checkbox" class="form-check-input" id="covg-type-ind">
                 <label class="form-check-label" for="covg-type-ind">Individual</label>
               </div>
               <div class="form-check">
-                <input v-model="coverage.named.checked" type="checkbox" class="form-check-input" id="covg-type-named">
+                <input v-model="basis.named.checked" type="checkbox" class="form-check-input" id="covg-type-named">
                 <label class="form-check-label" for="covg-type-named">Named</label>
               </div>
             </div>
             <transition name="fade" mode="out-in">
-              <div v-if="coverage.enterprise.checked" class="form-group">
+              <div v-if="basis.enterprise.checked" class="form-group">
                 <h6 class="mt-3">Annual Dollar Volume:</h6>
                 <label for="adv0">{{ year0 - 1 }}</label>
-                <input v-model.lazy="coverage.enterprise.adv0" v-money="money" class="form-control" id="adv0">
+                <input v-model.lazy="basis.enterprise.adv0" v-money="money" class="form-control" id="adv0">
                 <label for="adv1">{{ year0 - 2 }}</label>
-                <input v-model.lazy="coverage.enterprise.adv1" v-money="money" type="text" class="form-control" id="adv1">
+                <input v-model.lazy="basis.enterprise.adv1" v-money="money" type="text" class="form-control" id="adv1">
                 <label for="adv2">{{ year0 - 3 }}</label>
-                <input v-model.lazy="coverage.enterprise.adv2" v-money="money" type="text" class="form-control" id="adv2">
+                <input v-model.lazy="basis.enterprise.adv2" v-money="money" type="text" class="form-control" id="adv2">
                 <h6 class="mt-3">Products handled by employees that have moved in commerce:</h6>
                 <input
-                  v-model.lazy="coverage.enterprise.products"
+                  v-model.lazy="basis.enterprise.products"
                   type="text"
                   class="form-control"
                   placeholder="Dell laptops and Ford trucks."
@@ -86,10 +88,10 @@
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="coverage.individual.checked" class="form-group">
+              <div v-if="basis.individual.checked" class="form-group">
                 <h6 class="mt-3">Describe the basis for individual coverage:</h6>
                 <textarea
-                  v-model.lazy="coverage.individual.basis"
+                  v-model.lazy="basis.individual.basis"
                   class="form-control"
                   id="adv0"
                   placeholder="The employees in this case assembled bird houses that were shipped to 12 states...">
@@ -97,7 +99,7 @@
               </div>
             </transition>
             <transition name="fade" mode="out-in">
-              <div v-if="coverage.named.checked" class="form-group">
+              <div v-if="basis.named.checked" class="form-group">
                 <h6 class="mt-3">The subject employer is a(n):</h6>
                 <div class="form-check">
                   <input  v-model="named" class="form-check-input" type="radio" id="hospital" value="hospital">
@@ -136,10 +138,10 @@
             </transition>
             <transition name="fade" mode="out-in">
               <div
-                v-if="coverage.enterprise.checked || coverage.individual.checked || coverage.named.checked"
+                v-if="basis.enterprise.checked || basis.individual.checked || basis.named.checked"
                 class="text-center"
               >
-                <router-link to="Report" class="btn btn-primary float-middle">Generate Report</router-link>
+                <button class="btn btn-primary float-middle" @click.prevent="next">Generate Report</button>
               </div>
             </transition>
           </form>
@@ -155,7 +157,7 @@ export default {
 
   data () {
     return {
-      coverage: {
+      basis: {
         enterprise: {
           adv0: null,
           adv1: null,
@@ -167,10 +169,6 @@ export default {
           basis: '',
           checked: false
         },
-        invPeriod: {
-          start: '',
-          end: ''
-        },
         named: {
           basis: '',
           checked: false
@@ -179,6 +177,10 @@ export default {
       hqAddress: {
         street: '',
         zip: ''
+      },
+      invPeriod: {
+        start: '',
+        end: ''
       },
       money: {
         decimal: '.',
@@ -194,7 +196,8 @@ export default {
         partnership: false,
         proprietorship: false
       },
-      principals: ''
+      principals: '',
+      proprietor: ''
     }
   },
 
@@ -209,6 +212,21 @@ export default {
   },
 
   methods: {
+    next () {
+      this.$store.state.coverage.basis.enterprise.adv0 = this.basis.enterprise.adv0
+      this.$store.state.coverage.basis.enterprise.adv1 = this.basis.enterprise.adv1
+      this.$store.state.coverage.basis.enterprise.adv2 = this.basis.enterprise.adv2
+      this.$store.state.coverage.basis.enterprise.checked = this.basis.enterprise.checked
+      this.$store.state.coverage.basis.enterprise.products = this.basis.enterprise.Products
+      this.$store.state.coverage.basis.individual.basis = this.basis.individual.basis
+      this.$store.state.coverage.basis.individual.checked = this.basis.individual.checked
+      this.$store.state.coverage.basis.named.basis = this.basis.named.basis
+      this.$store.state.coverage.basis.named.checked = this.basis.named.checked
+      this.$store.state.coverage.invPeriod.start = this.invPeriod.start
+      this.$store.state.coverage.invPeriod.end = this.invPeriod.end
+      this.$store.state.coverage.officers = this.officers
+      this.$store.state.coverage.type.corporation = this.type.corporation
+    },
     sameAddress () {
       if (this.hqAddress.street === '') {
         this.hqAddress.street = this.$store.state.caseInfo.street
