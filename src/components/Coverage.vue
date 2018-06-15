@@ -102,34 +102,34 @@
               <div v-if="basis.named.checked" class="form-group">
                 <h6 class="mt-3">The subject employer is a(n):</h6>
                 <div class="form-check">
-                  <input  v-model="named" class="form-check-input" type="radio" id="hospital" value="hospital">
+                  <input  v-model="basis.named.basis" class="form-check-input" type="radio" id="hospital" value="hospital">
                   <label class="form-check-label" for="hospital">
                     Hospital
                   </label>
                 </div>
                 <div class="form-check">
-                  <input v-model="named" class="form-check-input" type="radio" id="health" value="health">
+                  <input v-model="basis.named.basis" class="form-check-input" type="radio" id="health" value="health">
                   <label class="form-check-label" for="health">
                     Institution primarily engaged in the care of the sick, the aged, the mentally ill or defective who reside
                     on the premises of the institution
                   </label>
                 </div>
                 <div class="form-check">
-                  <input v-model="named" class="form-check-input" type="radio" id="school" value="school">
+                  <input v-model="basis.named.basis" class="form-check-input" type="radio" id="school" value="school">
                   <label class="form-check-label" for="school">
                     School for mentally or physically handicapped or gifted children, a preschool, elementary or secondary school,
                     or an institution of higher education
                   </label>
                 </div>
                 <div class="form-check">
-                  <input v-model="named" class="form-check-input" type="radio" id="rail" value="rail">
+                  <input v-model="basis.named.basis" class="form-check-input" type="radio" id="rail" value="rail">
                   <label class="form-check-label" for="rail">
                     Employer involved in the operation of a street, suburban or interurban electric railway, or local trolley
                     or motorbus carrier and the rates and services of the railway or carrier are subject to regulation by a statesor local agency
                   </label>
                 </div>
                 <div class="form-check">
-                  <input v-model="named" class="form-check-input" type="radio" id="public" value="public">
+                  <input v-model="basis.named.basis" class="form-check-input" type="radio" id="public" value="govt">
                   <label class="form-check-label" for="public">
                     Public agency
                   </label>
@@ -228,6 +228,11 @@ export default {
       this.$store.state.coverage.nature = this.nature
       this.$store.state.coverage.officers = this.officers
       this.$store.state.coverage.type.corporation = this.type.corporation
+      this.$store.state.coverage.type.llc = this.type.llc
+      this.$store.state.coverage.type.partnership = this.type.partnership
+      this.$store.state.coverage.type.proprietorship = this.type.proprietorship
+      this.$store.state.coverage.principals = this.principals
+      this.$store.state.coverage.proprietor = this.proprietor
       this.$router.push('/report')
     },
     sameAddress () {
