@@ -21,7 +21,7 @@
               <label for="zip" class="mt-2">Zip Code</label>
               <input v-model="hqAddress.zip" class="form-control" type="number" id="zip" placeholder="10001">
               <h6 class="mt-3">Nature of the business:</h6>
-              <textarea class="form-control mt-3" placeholder="The subject employer specializes in the production of luxury dog houses that are sold to large pet supply retailers across the U.S."></textarea>
+              <textarea v-model="nature" class="form-control mt-3" placeholder="The subject employer specializes in the production of luxury dog houses that are sold to large pet supply retailers across the U.S."></textarea>
               <h6 class="mt-3">Company Structure:</h6>
               <div class="form-check">
                 <input v-model="type.corporation" type="checkbox" class="form-check-input" id="comp-type-corp">
@@ -189,6 +189,7 @@ export default {
         precision: 0,
         masked: false
       },
+      nature: '',
       officers: '',
       type: {
         corporation: false,
@@ -224,6 +225,7 @@ export default {
       this.$store.state.coverage.basis.named.checked = this.basis.named.checked
       this.$store.state.coverage.invPeriod.start = this.invPeriod.start
       this.$store.state.coverage.invPeriod.end = this.invPeriod.end
+      this.$store.state.coverage.nature = this.nature
       this.$store.state.coverage.officers = this.officers
       this.$store.state.coverage.type.corporation = this.type.corporation
       this.$router.push('/report')

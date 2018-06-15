@@ -40,6 +40,7 @@ export const store = new Vuex.Store({
         start: '',
         end: ''
       },
+      nature: '',
       officers: '',
       type: {
         corporation: false,
