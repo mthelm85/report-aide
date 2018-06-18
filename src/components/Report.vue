@@ -22,7 +22,8 @@
       </div>
       <h3 class="text-center mt-4">FLSA Narrative Report</h3>
       <p class="mt-4">The legal name of the subject employer is {{ caseInfo.legalName }} and the trade name is {{ caseInfo.tradeName }}.
-        {{ coverage.nature }} {{ caseInfo.legalName }} is a(n) {{ entityType }}.
+        {{ coverage.nature }} {{ caseInfo.tradeName }} is a(n) {{ entityType }} that was established in the state of {{ coverage.bizState }}
+        on {{ new Date(coverage.estabDate).toLocaleDateString("en-US") }}.
       </p>
       <p v-if="coverage.basis.enterprise.checked">The subject employer meets the definition of <i>enterprise engaged in commerce or in the production of goods
         for commerce</i>, per Section 203(s)(1)(A) of the Act, as its annual dollar volume of business done was
@@ -31,7 +32,11 @@
       </p>
       <p v-if="coverage.basis.individual.checked">{{ coverage.basis.individual.basis }}</p>
       <p v-if="coverage.basis.named.checked">The subject employer is covered under the FLSA as it meets the definition of
-      a(n) <i>{{ namedType }}</i>.</p>
+      a(n) <i>{{ namedType }}</i>.
+      </p>
+      <p>This investigation covers the period from {{ new Date(coverage.invPeriod.start).toLocaleDateString("en-US") }} to
+      {{ new Date(coverage.invPeriod.end).toLocaleDateString("en-US") }}.
+      </p>
     </div>
   </div>
 </div>
@@ -57,6 +62,8 @@ export default {
         if (type[i] === true) {
           if (i === 'llc') {
             return 'Limited Liability Company'
+          } else if (i === 'proprietorship') {
+            return 'Sole Proprietorship'
           } else {
             return i
           }

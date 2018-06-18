@@ -32,6 +32,8 @@ export const store = new Vuex.Store({
           checked: false
         }
       },
+      bizState: '',
+      estabDate: '',
       hqAddress: {
         street: '',
         zip: ''
@@ -48,8 +50,7 @@ export const store = new Vuex.Store({
         partnership: false,
         proprietorship: false
       },
-      principals: '',
-      proprietor: ''
+      principals: ''
     }
   },
   getters: {

@@ -12,7 +12,7 @@
               <input v-model="ein" class="form-control" type="text" placeholder="12-3456789">
               <h6 class="mt-3">Employer Name:</h6>
               <label for="legalName">Legal Name</label>
-              <input v-model="legalName" class="form-control" type="text" placeholder="Johnny III, Inc.">
+              <input v-model="legalName" class="form-control" type="text" placeholder="Johnny III, Inc. or Johnny B. Goode (for a sole proprietor)">
               <label for="tradeName" class="mt-2">Trade Name</label>
               <input v-model="tradeName" class="form-control" type="text" placeholder="Johnny's Car Wash">
               <h6 class="mt-3">Establishment Address:</h6>

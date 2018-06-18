@@ -22,6 +22,10 @@
               <input v-model="hqAddress.zip" class="form-control" type="number" id="zip" placeholder="10001">
               <h6 class="mt-3">Nature of the business:</h6>
               <textarea v-model="nature" class="form-control mt-3" placeholder="The subject employer specializes in the production of luxury dog houses that are sold to large pet supply retailers across the U.S."></textarea>
+              <h6 class="mt-3">Date Business Established:</h6>
+              <input v-model="estabDate" type="date" id="estabDate" class="form-control mt-3">
+              <h6 class="mt-3">State of Establishment/Incorporation:</h6>
+              <input v-model="bizState" type="text" id="bizState" class="form-control mt-3" placeholder="Oklahoma">
               <h6 class="mt-3">Company Structure:</h6>
               <div class="form-check">
                 <input v-model="type.corporation" type="checkbox" class="form-check-input" id="comp-type-corp">
@@ -45,12 +49,6 @@
                   <input v-model="principals" type="text" id="principals" class="form-control" placeholder="John A. Doe (25%) and Jane B. Doe (75%)">
                   <label for="officers" class="mt-2">Company Officers</label>
                   <input v-model="officers" type="text" id="officers" class="form-control" placeholder="Jack C. Smith (President) and Jackie D. Smith (Treasurer)">
-                </div>
-              </transition>
-              <transition name="fade" mode="out-in">
-                <div v-if="type.proprietorship" class="form-group form-group-lg">
-                  <label for="proprietorName" class="mt-2">Name of Sole Proprietor</label>
-                  <input v-model="proprietor" type="text" id="proprietorName" class="form-control" placeholder="John A. Doe">
                 </div>
               </transition>
             </div>
@@ -174,6 +172,8 @@ export default {
           checked: false
         }
       },
+      bizState: '',
+      estabDate: '',
       hqAddress: {
         street: '',
         zip: ''
@@ -197,8 +197,7 @@ export default {
         partnership: false,
         proprietorship: false
       },
-      principals: '',
-      proprietor: ''
+      principals: ''
     }
   },
 
@@ -233,6 +232,8 @@ export default {
       this.$store.state.coverage.type.proprietorship = this.type.proprietorship
       this.$store.state.coverage.principals = this.principals
       this.$store.state.coverage.proprietor = this.proprietor
+      this.$store.state.coverage.estabDate = this.estabDate
+      this.$store.state.coverage.bizState = this.bizState
       this.$router.push('/report')
     },
     sameAddress () {
